@@ -17,6 +17,8 @@ const Index = () => {
 
   const startMining = () => {
     setMining(true);
+    const miningDuration = 24 * 60 * 60 * 1000;
+    const updateInterval = miningDuration / 100;
     let progress = 0;
     const interval = setInterval(() => {
       progress += 1;
@@ -27,7 +29,7 @@ const Index = () => {
         setMiningProgress(0);
         setMining(false);
       }
-    }, 50);
+    }, updateInterval);
   };
 
   const watchAd = () => {
