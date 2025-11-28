@@ -156,16 +156,10 @@ export const WithdrawTab = ({ balance }: OtherTabsProps) => {
               />
             </div>
 
-            <Button className="w-full" size="lg" disabled={balance < 0.001}>
+            <Button className="w-full" size="lg">
               <Icon name="Send" size={20} className="mr-2" />
               Вывести средства
             </Button>
-
-            {balance < 0.001 && (
-              <p className="text-sm text-destructive text-center">
-                Недостаточно средств для вывода. Минимум: 0.001 BTC
-              </p>
-            )}
           </div>
 
           <Separator />
