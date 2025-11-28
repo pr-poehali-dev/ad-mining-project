@@ -6,10 +6,17 @@ import Icon from '@/components/ui/icon';
 interface MiningTabProps {
   mining: boolean;
   miningProgress: number;
+  timeRemaining: number;
   startMining: () => void;
 }
 
-const MiningTab = ({ mining, miningProgress, startMining }: MiningTabProps) => {
+const MiningTab = ({ mining, miningProgress, timeRemaining, startMining }: MiningTabProps) => {
+  const formatTime = (ms: number) => {
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
   return (
     <div className="space-y-6 animate-fade-in">
       <Card>
@@ -33,12 +40,18 @@ const MiningTab = ({ mining, miningProgress, startMining }: MiningTabProps) => {
           </div>
 
           {mining && (
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>Прогресс</span>
-                <span>{miningProgress}%</span>
+            <div className="space-y-4">
+              <div className="text-center">
+                <p className="text-4xl font-bold text-primary mb-1">{formatTime(timeRemaining)}</p>
+                <p className="text-sm text-muted-foreground">Осталось времени</p>
               </div>
-              <Progress value={miningProgress} className="h-3" />
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>Прогресс</span>
+                  <span>{miningProgress}%</span>
+                </div>
+                <Progress value={miningProgress} className="h-3" />
+              </div>
             </div>
           )}
 

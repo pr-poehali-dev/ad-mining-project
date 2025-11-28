@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
@@ -11,6 +11,7 @@ const Index = () => {
   const [balance, setBalance] = useState(0.00524);
   const [mining, setMining] = useState(false);
   const [miningProgress, setMiningProgress] = useState(0);
+  const [timeRemaining, setTimeRemaining] = useState(0);
   const [adsWatched, setAdsWatched] = useState(7);
   const [watchingAd, setWatchingAd] = useState(false);
   const [adProgress, setAdProgress] = useState(0);
@@ -18,15 +19,22 @@ const Index = () => {
   const startMining = () => {
     setMining(true);
     const miningDuration = 30 * 60 * 1000;
+    const startTime = Date.now();
     const updateInterval = miningDuration / 100;
     let progress = 0;
+    
     const interval = setInterval(() => {
       progress += 1;
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, miningDuration - elapsed);
+      setTimeRemaining(remaining);
       setMiningProgress(progress);
+      
       if (progress >= 100) {
         clearInterval(interval);
         setBalance(prev => prev + 0.00001);
         setMiningProgress(0);
+        setTimeRemaining(0);
         setMining(false);
       }
     }, updateInterval);
@@ -124,6 +132,7 @@ const Index = () => {
             <MiningTab 
               mining={mining}
               miningProgress={miningProgress}
+              timeRemaining={timeRemaining}
               startMining={startMining}
             />
           </TabsContent>
