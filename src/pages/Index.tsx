@@ -18,7 +18,7 @@ const Index = () => {
 
   const startMining = () => {
     setMining(true);
-    const miningDuration = 30 * 60 * 1000;
+    const miningDuration = 15 * 60 * 1000;
     const startTime = Date.now();
     const updateInterval = miningDuration / 100;
     let progress = 0;
